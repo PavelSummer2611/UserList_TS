@@ -1,4 +1,4 @@
-import type { User } from "../../types/types";
+import type { UserCardButtons } from "../../types/types";
 
 export function UserCardButtons({
 	context,
@@ -6,13 +6,7 @@ export function UserCardButtons({
 	openModalForEdit,
 	addToFavorites,
 	removeFromFavorites,
-}: {
-	context: "apiUsers" | "favoriteUsers";
-	user: User;
-	openModalForEdit?: (user: User) => void;
-	addToFavorites: (user: User) => void;
-	removeFromFavorites: (uuid: string) => void;
-}) {
+}: UserCardButtons) {
 	if (context === "apiUsers") {
 		return (
 			<button

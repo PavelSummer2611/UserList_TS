@@ -3,6 +3,8 @@ import UserCard from "../components/UserCard/UserCard";
 import { FavoritesContext } from "../context/FavoritesContext";
 import NewUserModal from "../components/NewUserModal/NewUserModal";
 import type { User } from "../types/types";
+import { AddUserButton } from "../components/FavoritePage/AddUserButton";
+import { SearchInput } from "../components/FavoritePage/SearchInput";
 
 export default function Favorite() {
 	const { favorites } = useContext(FavoritesContext)!;
@@ -29,23 +31,15 @@ export default function Favorite() {
 			)}
 
 			<div className="flex flex-col justify-center px-5">
-				<button
+				<AddUserButton
 					onClick={() => {
 						setEditableUser(null);
 						setIsOpenModal(true);
 					}}
-					className="self-center text-sm px-2 py-1 mb-5 bg-yellow-900
-                     rounded hover:bg-yellow-700 cursor-pointer"
-				>
-					Добавить пользователя
-				</button>
-				<input
-					type="search"
+				/>
+				<SearchInput
 					value={searchQuery}
-					onChange={(e) => setSearchQuery(e.target.value)}
-					placeholder="поиск пользователя"
-					className="bg-pink-300 self-center rounded-2xl w-full min-w-[50px] 
-               max-w-[700px] px-3 p-1 mb-3 placeholder-gray-500 text-black"
+					onChange={setSearchQuery}
 				/>
 			</div>
 

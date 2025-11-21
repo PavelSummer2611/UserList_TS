@@ -27,30 +27,10 @@ export default function UserCard({
 		>
 			<UserAvatar src={user.picture.large} />
 
-			{/* {user.picture?.large ? (
-				<img
-					src={user.picture.large}
-					alt="аватарка"
-					className="rounded"
-				/>
-			) : (
-				<div className="flex items-center justify-center h-42 w-full bg-gray-200 text-gray-600 rounded">
-					НЕТ ФОТО
-				</div>
-			)} */}
-
-<UserInfo name={user.name} dob={user.dob} />
-
-
-			{/* <div className="flex gap-1 mt-auto">
-				<div>
-					{user.name.first} {user.name.last}
-				</div>
-			</div>
-
-			<div className="flex">
-				<div className="text-sm">возраст: {user.dob.age}</div>
-			</div> */}
+			<UserInfo
+				name={user.name}
+				dob={user.dob}
+			/>
 
 			<UserCardButtons
 				context={context}
@@ -59,34 +39,6 @@ export default function UserCard({
 				addToFavorites={addToFavorites}
 				removeFromFavorites={removeFromFavorites}
 			/>
-
-			{/* {context === "apiUsers" && (
-				<button
-					onClick={() => addToFavorites(user)}
-					className="text-sm px-2 py-1 bg-yellow-900 rounded hover:bg-yellow-700 cursor-pointer"
-				>
-					Добавить в избранное
-				</button>
-			)}
-
-			{context === "favoriteUsers" && (
-				<button
-					onClick={() => removeFromFavorites(user.login.uuid)}
-					className=" text-sm px-2 py-1 bg-yellow-900 rounded hover:bg-yellow-700 cursor-pointer"
-				>
-					Удалить из избранного
-				</button>
-			)}
-			{context === "favoriteUsers" ? (
-				<button
-					onClick={() => {
-						openModalForEdit?.(user);
-					}}
-					className=" text-sm px-2 py-1 bg-gray-800 rounded hover:bg-gray-500 cursor-pointer"
-				>
-					Изменить
-				</button>
-			) : null} */}
 		</div>
 	);
 }

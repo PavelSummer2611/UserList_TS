@@ -12,9 +12,17 @@ export interface FavoritesContextType {
 	updateUser: (updatedUser: User) => void
 }
 
-export type UserFormData = {
-	name: { first: string; last: string };
-	dob: { age: number | string };
-	picture: { large: string };
-	login: { uuid: string };
+export type UserCardButtons = {
+	context: "apiUsers" | "favoriteUsers";
+	user: User;
+	openModalForEdit?: (user: User) => void;
+	addToFavorites: (user: User) => void;
+	removeFromFavorites: (uuid: string) => void;
+};
+
+export type UserFormProps = {
+	defaultValues: User;
+	onSubmit: (data: User) => void;
+	onCancel: () => void;
+	isEdit?: boolean;
 };
