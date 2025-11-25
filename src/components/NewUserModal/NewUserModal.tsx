@@ -10,7 +10,7 @@ type Props = {
 	onClose: () => void;
 };
 
-export function NewUserModal({ user, onClose }: Props) {
+export default function NewUserModal({ user, onClose }: Props) {
 	const { addToFavorites, updateUser } = useContext(FavoritesContext)!;
 	const isEdit = Boolean(user);
 
