@@ -1,61 +1,39 @@
-import { useContext, useState } from "react";
-import UserCard from "../components/UserCard/UserCard";
-import { FavoritesContext } from "../context/FavoritesContext";
-import NewUserModal from "../components/NewUserModal/NewUserModal";
+import { useContext, useMemo, useState } from "react";
+import { FavoritesContext } from "../context/Favorite/FavoritesContext";
 import type { User } from "../types/types";
 import { AddUserButton } from "../components/FavoritePage/AddUserButton";
 import { SearchInput } from "../components/FavoritePage/SearchInput";
+import FavoriteUserList from "../components/FavoriteUserList/FavoriteUserList";
+import { ModalContext } from "../context/Modal/ModalContext";
 
 export default function Favorite() {
-	const { favorites } = useContext(FavoritesContext)!;
-
-	const [isOpenModal, setIsOpenModal] = useState(false);
 	const [searchQuery, setSearchQuery] = useState("");
-	const [editableUser, setEditableUser] = useState<User | null>(null);
 
-	const filteredFavorites = favorites.filter((user) => {
-		const fullName = `${user.name.first} ${user.name.last}`.toLowerCase();
-		return fullName.includes(searchQuery.toLowerCase());
-	});
+	const { favorites, removeFromFavorites } = useContext(FavoritesContext)!;
+	const { openModal } = useContext(ModalContext);
+
+	const filteredFavorites = useMemo(() => {
+		return favorites.filter((user: User) => {
+			const fullName = `${user.name.first} ${user.name.last}`.toLowerCase();
+			return fullName.includes(searchQuery.toLowerCase());
+		});
+	}, [favorites, searchQuery]);
 
 	return (
 		<main>
-			{isOpenModal && (
-				<NewUserModal
-					user={editableUser}
-					onClose={() => {
-						setIsOpenModal(false);
-						setEditableUser(null);
-					}}
-				/>
-			)}
-
 			<div className="flex flex-col justify-center px-5">
-				<AddUserButton
-					onClick={() => {
-						setEditableUser(null);
-						setIsOpenModal(true);
-					}}
-				/>
+				<AddUserButton onClick={() => openModal(null)} />
 				<SearchInput
 					value={searchQuery}
 					onChange={setSearchQuery}
 				/>
 			</div>
 
-			<div className="flex flex-wrap justify-center gap-4">
-				{filteredFavorites.map((user) => (
-					<UserCard
-						key={user.login.uuid}
-						context={"favoriteUsers"}
-						openModalForEdit={(user) => {
-							setEditableUser(user);
-							setIsOpenModal(true);
-						}}
-						{...user}
-					/>
-				))}
-			</div>
+			<FavoriteUserList
+				users={filteredFavorites}
+				onEdit={openModal}
+				onDelete={removeFromFavorites}
+			/>
 		</main>
 	);
 }

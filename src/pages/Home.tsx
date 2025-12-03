@@ -1,6 +1,10 @@
+import { useContext } from "react";
 import UserCard from "../components/UserCard/UserCard";
+import UserCardButton from "../components/UserCard/UserCardButton";
 import { fetchUsers } from "../utils/api";
 import { useQuery } from "@tanstack/react-query";
+import { FavoritesContext } from "../context/Favorite/FavoritesContext";
+import UserCardSkeleton from "../components/UserCard/UserCardSkeleton";
 
 export default function Home() {
 	const {
@@ -15,6 +19,8 @@ export default function Home() {
 		staleTime: 1000 * 60,
 		retry: 1,
 	});
+
+	const { addToFavorites } = useContext(FavoritesContext)!;
 
 	if (isError)
 		return (
@@ -31,20 +37,22 @@ export default function Home() {
 
 	return (
 		<main className="flex flex-wrap justify-center gap-4 p-1">
-			{isLoading
-				? Array.from({ length: 10 }).map((_, i) => (
-						<div
-							key={i}
-							className="w-47 h-65 p-4 bg-gray-900 rounded-md animate-pulse"
-						></div>
-					))
-				: users?.map((user) => (
-						<UserCard
-							key={user.login.uuid}
-							{...user}
-							context="apiUsers"
+			{isLoading ? (
+				<UserCardSkeleton />
+			) : (
+				users?.map((user) => (
+					<UserCard
+						key={user.login.uuid}
+						{...user}
+					>
+						<UserCardButton
+							label={"Добавить в избранное"}
+							onClick={() => addToFavorites(user)}
+							className={"bg-yellow-900  hover:bg-yellow-700"}
 						/>
-					))}
+					</UserCard>
+				))
+			)}
 		</main>
 	);
 }

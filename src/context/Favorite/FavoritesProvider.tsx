@@ -1,5 +1,5 @@
 import { useEffect, useState, type ReactNode } from "react";
-import type { User } from "../types/types";
+import type { User } from "../../types/types";
 import { FavoritesContext } from "./FavoritesContext";
 
 export function FavoritesProvider({ children }: { children: ReactNode }) {
@@ -31,8 +31,10 @@ export function FavoritesProvider({ children }: { children: ReactNode }) {
 	};
 
 	const updateUser = (updatedUser: User) => {
-		setFavorites(prev =>
-			prev.map(u => u.login.uuid === updatedUser.login.uuid ? updatedUser : u)
+		setFavorites((prev) =>
+			prev.map((u) =>
+				u.login.uuid === updatedUser.login.uuid ? updatedUser : u
+			)
 		);
 	};
 

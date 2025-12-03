@@ -1,4 +1,3 @@
-// components/UserForm.tsx
 import { useForm } from "react-hook-form";
 import type { User, UserFormProps } from "../../types/types";
 

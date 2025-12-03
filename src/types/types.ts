@@ -9,15 +9,21 @@ export interface FavoritesContextType {
 	favorites: User[];
 	addToFavorites: (user: User) => void;
 	removeFromFavorites: (id: string) => void;
-	updateUser: (updatedUser: User) => void
+	updateUser: (updatedUser: User) => void;
 }
 
-export type UserCardButtons = {
-	context: "apiUsers" | "favoriteUsers";
-	user: User;
-	openModalForEdit?: (user: User) => void;
-	addToFavorites: (user: User) => void;
-	removeFromFavorites: (uuid: string) => void;
+// export type UserCardButtons = {
+// 	context: "apiUsers" | "favoriteUsers";
+// 	user: User;
+// 	openModalForEdit?: (user: User) => void;
+// 	addToFavorites: (user: User) => void;
+// 	removeFromFavorites: (uuid: string) => void;
+// };
+
+export type FavoriteUserList = {
+	users: User[];
+	onEdit: (user: User) => void;
+	onDelete: (uuid: string) => void;
 };
 
 export type UserFormProps = {
